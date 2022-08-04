@@ -33,8 +33,7 @@ if [ -z "$FF_ARCH" ]; then
     exit 1
 fi
 
-
-FF_BUILD_ROOT=`pwd`
+FF_BUILD_ROOT=$(pwd)
 
 FF_BUILD_NAME=
 FF_SOURCE=
@@ -88,7 +87,7 @@ elif [ "$FF_ARCH" = "arm64" ]; then
     FF_CMAKE_ABI="arm64-v8a"
 
 else
-    echo "unknown architecture $FF_ARCH";
+    echo "unknown architecture $FF_ARCH"
     exit 1
 fi
 
@@ -107,7 +106,6 @@ cd $FF_CMAKE_BUILD_DIR
 FF_CMAKE_CFG_FLAGS="-DCMAKE_TOOLCHAIN_FILE=${FF_SOURCE}/android.toolchain.cmake -DANDROID_NDK=$ANDROID_NDK -DBUILD_EXAMPLES=0 -DBUILD_LSR_TESTS=0 -DBUILD_SHARED_LIBS=0 -DBUILD_TESTS=0 -DCMAKE_BUILD_TYPE=Release -DWITH_LSR_BINDINGS=0 -DWITH_OPENMP=0 -DWITH_PFFFT=0"
 echo "cmake $FF_CMAKE_CFG_FLAGS -DANDROID_ABI=$FF_CMAKE_ABI -DCMAKE_INSTALL_PREFIX=$FF_PREFIX"
 cmake $FF_CMAKE_CFG_FLAGS $FF_CMAKE_EXTRA_FLAGS -DANDROID_ABI=$FF_CMAKE_ABI -DCMAKE_INSTALL_PREFIX=$FF_PREFIX $FF_SOURCE
-
 
 #--------------------
 echo ""

@@ -25,7 +25,6 @@ echo "[*] check env $1"
 echo "===================="
 set -e
 
-
 #--------------------
 # common defines
 FF_ARCH=$1
@@ -38,10 +37,8 @@ if [ -z "$FF_ARCH" ]; then
     exit 1
 fi
 
-
-FF_BUILD_ROOT=`pwd`
+FF_BUILD_ROOT=$(pwd)
 FF_ANDROID_PLATFORM=android-9
-
 
 FF_BUILD_NAME=
 FF_SOURCE=
@@ -61,7 +58,6 @@ FF_DEP_LIBS=
 FF_MODULE_DIRS="compat libavcodec libavfilter libavformat libavutil libswresample libswscale"
 FF_ASSEMBLER_SUB_DIRS=
 
-
 #--------------------
 echo ""
 echo "--------------------"
@@ -72,7 +68,6 @@ FF_MAKE_TOOLCHAIN_FLAGS=$IJK_MAKE_TOOLCHAIN_FLAGS
 FF_MAKE_FLAGS=$IJK_MAKE_FLAG
 FF_GCC_VER=$IJK_GCC_VER
 FF_GCC_64_VER=$IJK_GCC_64_VER
-
 
 #----- armv7a begin -----
 if [ "$FF_ARCH" = "armv7a" ]; then
@@ -162,7 +157,7 @@ elif [ "$FF_ARCH" = "arm64" ]; then
     FF_ASSEMBLER_SUB_DIRS="aarch64 neon"
 
 else
-    echo "unknown architecture $FF_ARCH";
+    echo "unknown architecture $FF_ARCH"
     exit 1
 fi
 
@@ -186,16 +181,14 @@ FF_DEP_LIBSOXR_INC=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_LIBSOXR/output/include
 FF_DEP_LIBSOXR_LIB=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_LIBSOXR/output/lib
 
 case "$UNAME_S" in
-    CYGWIN_NT-*)
-        FF_SYSROOT="$(cygpath -am $FF_SYSROOT)"
-        FF_PREFIX="$(cygpath -am $FF_PREFIX)"
+CYGWIN_NT-*)
+    FF_SYSROOT="$(cygpath -am $FF_SYSROOT)"
+    FF_PREFIX="$(cygpath -am $FF_PREFIX)"
     ;;
 esac
 
-
 mkdir -p $FF_PREFIX
 # mkdir -p $FF_SYSROOT
-
 
 FF_TOOLCHAIN_TOUCH="$FF_TOOLCHAIN_PATH/touch"
 if [ ! -f "$FF_TOOLCHAIN_TOUCH" ]; then
@@ -203,9 +196,8 @@ if [ ! -f "$FF_TOOLCHAIN_TOUCH" ]; then
         $FF_MAKE_TOOLCHAIN_FLAGS \
         --platform=$FF_ANDROID_PLATFORM \
         --toolchain=$FF_TOOLCHAIN_NAME
-    touch $FF_TOOLCHAIN_TOUCH;
+    touch $FF_TOOLCHAIN_TOUCH
 fi
-
 
 #--------------------
 echo ""
@@ -238,12 +230,11 @@ FF_CFLAGS="-O3 -Wall -pipe \
 export COMMON_FF_CFG_FLAGS=
 . $FF_BUILD_ROOT/../../config/module.sh
 
-
 #--------------------
 # with openssl
 if [ -f "${FF_DEP_OPENSSL_LIB}/libssl.a" ]; then
     echo "OpenSSL detected"
-# FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-nonfree"
+    # FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-nonfree"
     FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-openssl"
 
     FF_CFLAGS="$FF_CFLAGS -I${FF_DEP_OPENSSL_INC}"
@@ -280,15 +271,15 @@ else
 fi
 
 case "$FF_BUILD_OPT" in
-    debug)
-        FF_CFG_FLAGS="$FF_CFG_FLAGS --disable-optimizations"
-        FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-debug"
-        FF_CFG_FLAGS="$FF_CFG_FLAGS --disable-small"
+debug)
+    FF_CFG_FLAGS="$FF_CFG_FLAGS --disable-optimizations"
+    FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-debug"
+    FF_CFG_FLAGS="$FF_CFG_FLAGS --disable-small"
     ;;
-    *)
-        FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-optimizations"
-        FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-debug"
-        FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-small"
+*)
+    FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-optimizations"
+    FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-debug"
+    FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-small"
     ;;
 esac
 
@@ -314,7 +305,7 @@ echo "--------------------"
 echo "[*] compile ffmpeg"
 echo "--------------------"
 cp config.* $FF_PREFIX
-make $FF_MAKE_FLAGS > /dev/null
+make $FF_MAKE_FLAGS >/dev/null
 make install
 mkdir -p $FF_PREFIX/include/libffmpeg
 cp -f config.h $FF_PREFIX/include/libffmpeg/config.h
@@ -328,18 +319,16 @@ echo $FF_EXTRA_LDFLAGS
 
 FF_C_OBJ_FILES=
 FF_ASM_OBJ_FILES=
-for MODULE_DIR in $FF_MODULE_DIRS
-do
+for MODULE_DIR in $FF_MODULE_DIRS; do
     C_OBJ_FILES="$MODULE_DIR/*.o"
-    if ls $C_OBJ_FILES 1> /dev/null 2>&1; then
+    if ls $C_OBJ_FILES 1>/dev/null 2>&1; then
         echo "link $MODULE_DIR/*.o"
         FF_C_OBJ_FILES="$FF_C_OBJ_FILES $C_OBJ_FILES"
     fi
 
-    for ASM_SUB_DIR in $FF_ASSEMBLER_SUB_DIRS
-    do
+    for ASM_SUB_DIR in $FF_ASSEMBLER_SUB_DIRS; do
         ASM_OBJ_FILES="$MODULE_DIR/$ASM_SUB_DIR/*.o"
-        if ls $ASM_OBJ_FILES 1> /dev/null 2>&1; then
+        if ls $ASM_OBJ_FILES 1>/dev/null 2>&1; then
             echo "link $MODULE_DIR/$ASM_SUB_DIR/*.o"
             FF_ASM_OBJ_FILES="$FF_ASM_OBJ_FILES $ASM_OBJ_FILES"
         fi
@@ -356,9 +345,9 @@ $CC -lm -lz -shared --sysroot=$FF_SYSROOT -Wl,--no-undefined -Wl,-z,noexecstack 
 mysedi() {
     f=$1
     exp=$2
-    n=`basename $f`
+    n=$(basename $f)
     cp $f /tmp/$n
-    sed $exp /tmp/$n > $f
+    sed $exp /tmp/$n >$f
     rm /tmp/$n
 }
 
@@ -377,7 +366,7 @@ for f in $FF_PREFIX/lib/pkgconfig/*.pc; do
         continue
     fi
     cp $f $FF_PREFIX/shared/lib/pkgconfig
-    f=$FF_PREFIX/shared/lib/pkgconfig/`basename $f`
+    f=$FF_PREFIX/shared/lib/pkgconfig/$(basename $f)
     # OSX sed doesn't have in-place(-i)
     mysedi $f 's/\/output/\/output\/shared/g'
     mysedi $f 's/-lavcodec/-lijkffmpeg/g'
