@@ -34,7 +34,7 @@ if [ -z "$FF_ARCH" ]; then
 fi
 
 FF_BUILD_ROOT=$(pwd)
-FF_ANDROID_PLATFORM=android-9
+FF_ANDROID_PLATFORM=android-16
 
 FF_BUILD_NAME=
 FF_SOURCE=
