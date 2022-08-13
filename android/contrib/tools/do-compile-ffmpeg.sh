@@ -293,19 +293,6 @@ cd $FF_SOURCE
 if [ -f "./config.h" ]; then
     echo 'reuse configure'
 else
-    export TARGET_CC="${FF_TOOLCHAIN_PATH}/bin/clang90.real"
-    export TARGET_CXX="${FF_TOOLCHAIN_PATH}/bin/clang90++.real"
-    mv "${FF_TOOLCHAIN_PATH}/bin/clang90" "${TARGET_CC}"
-    mv "${FF_TOOLCHAIN_PATH}/bin/clang90++" "${TARGET_CXX}"
-    make --directory="${LIB_MONITOR_HOME}/" clean
-    make --directory="${LIB_MONITOR_HOME}/inserter/" \
-        DEBUG="-DNDEBUG" \
-        TARGET_PREFIX="${NDK_LLVM_HOME}" \
-        TARGET_CC="${TARGET_CC}" \
-        TARGET_CXX="${TARGET_CXX}" \
-        TARGET_OS="android"
-    cp "${LIB_MONITOR_HOME}/inserter/inserter" "${FF_TOOLCHAIN_PATH}/bin/clang90"
-    cp "${LIB_MONITOR_HOME}/inserter/inserter++" "${FF_TOOLCHAIN_PATH}/bin/clang90++"
     which $CC
     ./configure $FF_CFG_FLAGS \
         --cc="${CC}" --cxx="${CXX}" --host-cc="$(brew --prefix llvm@9)/bin/clang" \
