@@ -20,7 +20,7 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
-LOCAL_CFLAGS += -std=c99 -Wno-deprecated-declarations -Wno-unused-function -Wno-unknown-pragmas -Wno-unused-variable
+LOCAL_CFLAGS += -std=c99
 LOCAL_LDLIBS += -llog -landroid -lOpenSLES -lEGL -lGLESv2
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)
