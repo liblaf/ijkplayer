@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -o xtrace
 set -o errexit
 set -o nounset
 
@@ -11,6 +10,11 @@ export LD_LIBRARY_PATH="$("${ndk_llvm_config}" --libdir)"
 export LIB_MONITOR_HOME="${HOME}/Desktop/liblaf/lib-monitor"
 
 bash "${LIB_MONITOR_HOME}/inserter/wrap-ndk.sh"
+
+cd config
+rm --force module.sh
+ln --symbolic module-default.sh module.sh
+cd ..
 
 cd android/contrib
 ./compile-ffmpeg.sh clean
