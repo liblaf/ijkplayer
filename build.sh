@@ -7,7 +7,7 @@ export ANDROID_NDK="${HOME}/.local/pkgs/ndk/r21e"
 export NDK_LLVM_HOME="${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64"
 ndk_llvm_config="${NDK_LLVM_HOME}/bin/llvm-config"
 export LD_LIBRARY_PATH="$("${ndk_llvm_config}" --libdir)"
-export LIB_MONITOR_HOME="${HOME}/Desktop/liblaf/lib-monitor"
+export LIB_MONITOR_HOME="${HOME}/Desktop/liblaf/lib-monitor/llvm"
 
 bash "${LIB_MONITOR_HOME}/inserter/wrap-ndk.sh"
 
