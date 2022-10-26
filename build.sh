@@ -2,14 +2,8 @@
 set -o errexit
 set -o nounset
 
-export ANDROID_SDK="${HOME}/Android/Sdk"
-export ANDROID_NDK="${HOME}/.local/pkgs/ndk/r21e"
-export NDK_LLVM_HOME="${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64"
-ndk_llvm_config="${NDK_LLVM_HOME}/bin/llvm-config"
-export LD_LIBRARY_PATH="$("${ndk_llvm_config}" --libdir)"
-export LIB_MONITOR_HOME="${HOME}/Desktop/liblaf/lib-monitor/llvm"
-
-bash "${LIB_MONITOR_HOME}/inserter/wrap-ndk.sh"
+export ANDROID_SDK="${HOME}/Android/Sdk/build-tools/25.0.3"
+export ANDROID_NDK="${HOME}/Android/Sdk/ndk/22.0.7026061"
 
 cd config
 rm --force module.sh
@@ -21,6 +15,5 @@ cd android/contrib
 ./compile-ffmpeg.sh "${@}"
 
 cd ..
-# export ANDROID_NDK="${HOME}/.local/pkgs/ndk/r14b"
 ./compile-ijk.sh clean
 ./compile-ijk.sh "${@}"
