@@ -16,6 +16,8 @@
 # License along with ijkPlayer; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
