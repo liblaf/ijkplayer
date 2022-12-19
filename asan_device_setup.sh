@@ -9,8 +9,6 @@
 #
 #===------------------------------------------------------------------------===#
 
-set -ex
-
 HERE="$(cd "/home/liblaf/Android/Sdk/ndk/22.0.7026061/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/bin" && pwd)"
 
 revert=no
@@ -172,6 +170,7 @@ adb_wait_for_device
 adb_remount
 adb_wait_for_device
 
+get_device_arch ARCH ARCH64
 echo "Target architecture: $ARCH"
 ASAN_RT="libclang_rt.asan-$ARCH-android.so"
 if [[ -n $ARCH64 ]]; then
