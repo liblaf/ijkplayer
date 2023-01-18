@@ -297,7 +297,7 @@ else
   ./configure $FF_CFG_FLAGS \
     --cc="${CC}" \
     --cxx="${CXX}" \
-    --host-cc="$(brew --prefix llvm@9)/bin/clang" \
+    --host-cc="$(brew --prefix llvm@11)/bin/clang" \
     --extra-cflags="$FF_CFLAGS $FF_EXTRA_CFLAGS" \
     --extra-ldflags="$FF_DEP_LIBS $FF_EXTRA_LDFLAGS"
   make clean

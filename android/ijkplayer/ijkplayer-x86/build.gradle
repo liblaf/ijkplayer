@@ -16,6 +16,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            debuggable true
+            jniDebuggable true
+            ndk {
+                debuggable true
+            }
+        }
     }
     sourceSets.main {
         jniLibs.srcDirs 'src/main/libs'
